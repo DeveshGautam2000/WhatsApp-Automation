@@ -24,6 +24,7 @@
 from selenium import webdriver
 from time import sleep
 import pandas as pd
+from selenium.webdriver.common.keys import Keys
 
 # Readind Data from the File
 dataFrame = pd.read_csv("data/numbers.csv")
@@ -51,12 +52,16 @@ for i in range(0, len(dataFrame["number"])):
     search_box = driver.find_element("xpath",
                                      '//div[@contenteditable="true"][@data-tab="3"]')
     search_box.send_keys(recipient_name)
+
+    # Added the Enter Key to the getinto the message field
+    search_box.send_keys(Keys.RETURN)
     sleep(1)
 
-    dp_box = driver.find_element("xpath", '//div[@class="_13jwn"]')
-    dp_box.click()
+    # Not working this way
+    # dp_box = driver.find_element("xpath", '//div[@class="_13jwn"][0]')
+    # dp_box.click()
 
-    sleep(4)
+    # sleep(4)
 
     if message != "0":
         message_box = driver.find_element(
@@ -67,7 +72,7 @@ for i in range(0, len(dataFrame["number"])):
         send_button = driver.find_element("xpath", '//span[@data-icon="send"]')
         send_button.click()
         message = "0"
-        sleep(2)
+        sleep(3)
 
     if filepath != "0":
         attachment_box = driver.find_element(
@@ -83,6 +88,6 @@ for i in range(0, len(dataFrame["number"])):
             "xpath", '//span[@data-icon="send"]')
         send_button.click()
         filepath = "0"
-        sleep(2)
+        sleep(3)
 
 sleep(2)
